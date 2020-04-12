@@ -4,7 +4,7 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 module.exports = async function(req, res, next) {
   // Get token from header
-  const token = req.header('x-auth-token');
+  const token = await req.header('x-auth-token');
 
   // Check if not token
   if (!token) {

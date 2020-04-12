@@ -40,9 +40,12 @@ if (dev) {
 app.use(express.static(path.resolve(__dirname, 'build')));
 
 //Routes
-app.get('*', (req, res) =>{
+app.get('/', (req, res) =>{
 	res.sendFile(path.resolve(__dirname, 'build', 'index.html'))
 })
+
+// Express validator
+app.use(express.json());
 
 // Define Routes
 app.use('/api/users', require('./routes/api/users'));
