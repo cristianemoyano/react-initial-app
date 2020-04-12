@@ -20,7 +20,7 @@ const PORT = normalizePort(process.env.PORT || 5000);
 connectDB();
 
 if (!dev) {
-	// Middlewares
+	// Non-dev Middlewares
 	// Remove X-Powered-By header
 	app.disable('x-powered-by');
 	// Compression: Node.js compression middleware.
@@ -30,42 +30,30 @@ if (!dev) {
 	// Morgan: HTTP request logger middleware for node.js
 	app.use(morgan('common'));
 
-	// Define Routes
-	app.use('/api/users', require('./routes/api/users'));
-	app.use('/api/auth', require('./routes/api/auth'));
-	app.use('/api/profile', require('./routes/api/profile'));
-
-	// Statics
-	app.use(express.static(path.resolve(__dirname, 'build')));
-
-	// Routes
-	app.get('*', (req, res) =>{
-		res.sendFile(path.resolve(__dirname, 'build', 'index.html'))
-	})
 }
 if (dev) {
-	// Middlewares
+	// Dev Middlewares
 	app.use(morgan('dev'));
-	
-
-	// Define Routes
-	app.use('/api/users', require('./routes/api/users'));
-	app.use('/api/auth', require('./routes/api/auth'));
-	app.use('/api/profile', require('./routes/api/profile'));
-
-	// Statics
-	app.use(express.static(path.resolve(__dirname, 'build')));
-	
-	//Routes
-	app.get('*', (req, res) =>{
-		res.sendFile(path.resolve(__dirname, 'build', 'index.html'))
-	})
 }
+
+// Statics
+app.use(express.static(path.resolve(__dirname, 'build')));
+
+//Routes
+app.get('*', (req, res) =>{
+	res.sendFile(path.resolve(__dirname, 'build', 'index.html'))
+})
+
+// Define Routes
+app.use('/api/users', require('./routes/api/users'));
+app.use('/api/auth', require('./routes/api/auth'));
+app.use('/api/profile', require('./routes/api/profile'));
+
 
 const server = createServer(app);
 
 // Run server with express: node server.js
 server.listen(PORT, err => {
 	if (err) throw err;
-	console.log(`Server started on port ${PORT}`);
+	console.log(`Server started.`);
 });
