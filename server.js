@@ -1,3 +1,6 @@
+// As early as possible in your application, require and configure dotenv.
+require('dotenv').config()
+
 const {createServer} = require('http');
 const express = require('express');
 const connectDB = require('./config/db');

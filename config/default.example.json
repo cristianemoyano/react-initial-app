@@ -1,4 +1,0 @@
-{
-  "mongoURI": "<your local mongo URI>",
-  "jwtSecret": "secret"
-}
