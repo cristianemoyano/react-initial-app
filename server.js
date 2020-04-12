@@ -27,6 +27,11 @@ if (!dev) {
 	// Morgan: HTTP request logger middleware for node.js
 	app.use(morgan('common'));
 
+	// Define Routes
+	app.use('/api/users', require('./routes/api/users'));
+	app.use('/api/auth', require('./routes/api/auth'));
+	app.use('/api/profile', require('./routes/api/profile'));
+
 	// Statics
 	app.use(express.static(path.resolve(__dirname, 'build')));
 
@@ -39,6 +44,12 @@ if (dev) {
 	// Middlewares
 	app.use(morgan('dev'));
 	
+
+	// Define Routes
+	app.use('/api/users', require('./routes/api/users'));
+	app.use('/api/auth', require('./routes/api/auth'));
+	app.use('/api/profile', require('./routes/api/profile'));
+
 	// Statics
 	app.use(express.static(path.resolve(__dirname, 'build')));
 	
