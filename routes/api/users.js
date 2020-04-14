@@ -81,12 +81,12 @@ router.post(
 
 // @route    POST api/users/reset_password
 // @desc     Reset password
-// @access   Private
+// @access   Public
 router.post('/reset_password', sendPasswordResetEmail);
 
 // @route    POST api/users/new_password/:userId/:token
 // @desc     New password
-// @access   Private
+// @access   Public
 router.post('/new_password/:userId/:token', receiveNewPassword);
 
 
