@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { check, validationResult } = require('express-validator');
 
+const {sendPasswordResetEmail, receiveNewPassword} = require('../../controllers/email');
 const User = require('../../models/User');
 
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -78,24 +79,15 @@ router.post(
 );
 
 
-// @route    GET api/users
-// @desc     Not valid yet. WIP
+// @route    POST api/users/reset_password
+// @desc     Reset password
 // @access   Private
-router.get('/', async (req, res) => {
-  try {
-    const profile = await Profile.findOne({
-      user: req.user.id
-    }).populate('user', ['firstName', 'lastName','email']);
+router.post('/reset_password', sendPasswordResetEmail);
 
-    if (!profile) {
-      return res.status(400).json({ msg: 'There is no profile for this user' });
-    }
+// @route    POST api/users/new_password/:userId/:token
+// @desc     New password
+// @access   Private
+router.post('/new_password/:userId/:token', receiveNewPassword);
 
-    res.status(200).json(profile);
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send('Server Error');
-  }
-});
 
 module.exports = router;
